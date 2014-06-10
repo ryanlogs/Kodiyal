@@ -13,7 +13,7 @@ function [Z, U] =  pca(X_norm)
 	diagonal = diag(S);
 	
 	while rating < 0.99
-		rating = sum(diagonal(k)) ./ sum(diagonal);
+		rating = sum(diagonal(1:k)) ./ sum(diagonal);
 		disp(sprintf('Rating for %d features = %f',k,rating));
 		k++;
 	end
