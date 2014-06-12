@@ -1,10 +1,10 @@
-function [Z, U] = apply_pca(X)
+function [Z, U] = apply_pca(Xn,flag,features)
 
 	%first normalize
 	[X_norm, mean, sigma] = feature_normalize(X);
 	
 	%apply PCA
-	[Z, U] = pca(X_norm);
+	[Z, U] = pca(X_norm, flag, features);
 	
 	%give the difference between X_norm and X_approx
 	X_approx = recover(Z, U);
