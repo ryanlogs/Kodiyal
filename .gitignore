@@ -215,3 +215,6 @@ pip-log.txt
 .mr.developer.cfg
 data/test/test.csv
 data/training/training.csv
+data/test/test.mat
+*.mat
+*.csv
