@@ -85,8 +85,8 @@ out_id = fopen(save_name,'w+');
 fprintf(out_id,'%s\n','EventId,RankOrder,Class');
 fclose(out_id);
 
-
-out = [test_id, rank, pred];
+out = (1:size(X_test,1))';
+out = [out, rank, pred];
 dlmwrite (save_name, out, '-append','delimiter',',');
 
 fprintf('Done!!!\n');

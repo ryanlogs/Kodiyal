@@ -3,8 +3,8 @@ function [J grad] = nn_adv_cost_function(nn_params, ...
                                    X, y, lambda)
 
 	
-	addpath('function\nn_functions');
-	addpath('function\util');
+	addpath('functions\nn_functions');
+	addpath('functions\utils');
 	m = size(X,1);	
 	
 	num_layers = length(network);
@@ -44,7 +44,7 @@ function [J grad] = nn_adv_cost_function(nn_params, ...
 		Y(i,y(i)+1) = 1;
 	end;
 
-	J = sum(sum(errorFunction(A{num_layers},Y))) / (m);
+	J = sum(sum(error_function(A{num_layers},Y))) / (m);
 
 	reg = 0;
 	for i = 1:num_layers-1
@@ -63,13 +63,13 @@ function [J grad] = nn_adv_cost_function(nn_params, ...
 	
 	for i = num_layers:-1:1
 		if(i==num_layers)
-			del{i} = (A{i} - Y).*hyperbolicGradient(Z{i});
+			del{i} = (A{i} - Y).*hyperbolic_gradient(Z{i});
 		else 
 			if(i == 1)
 				delta{i} = (del{i+1})' * A{i};  
 			else
 				del{i} = del{i+1} * Theta{i};
-				del{i} = del{i}(:,2:end) .* hyperbolicGradient(Z{i});
+				del{i} = del{i}(:,2:end) .* hyperbolic_gradient(Z{i});
 				delta{i} = (del{i+1})' * A{i};  	
 			end
 		end
