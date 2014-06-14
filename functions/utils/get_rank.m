@@ -27,6 +27,8 @@ function rank = get_rank(Theta, X)
 		end	
 	end
 	
+	size(p)
+	size((1:m)')
 	% adding numbers to sort by index, to retrieve original ordering
 	p = [ (1:m)', p]; 
 	
