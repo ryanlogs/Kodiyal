@@ -34,7 +34,7 @@ function rank = get_rank(Theta, X)
 	p = sortrows(p,2);
 	
 	% adding rank
-	p = [ p, (1:m);]; 	
+	p = [ p, (1:m)]; 	
 	
 	%resort based on original order
 	p = sortrows(p,1);	
