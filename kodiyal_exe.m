@@ -83,11 +83,13 @@ save_name = sprintf('output\\%s_result%s.csv','DigitRec',datestr(clock,'HH_MM_DD
 %writing the headers first
 out_id = fopen(save_name,'w+');
 fprintf(out_id,'%s\n','EventId,RankOrder,Class');
+out = [test_id, rank, pred];
+%dlmwrite (save_name, out, '-append','delimiter',',');
+fprintf(out_id,'$d,%d,%d\n',out');
 fclose(out_id);
 
 
-out = [test_id, rank, pred];
-dlmwrite (save_name, out, '-append','delimiter',',');
+
 
 fprintf('Done!!!\n');
 
