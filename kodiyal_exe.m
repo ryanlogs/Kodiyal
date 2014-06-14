@@ -22,7 +22,7 @@ X_test = normalize_range(X_test, 0, 1);
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
 network = [size(X_train,2); 50; 50; 2];
-iter = 2;
+iter = 1000;
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.2;
@@ -85,7 +85,7 @@ out_id = fopen(save_name,'w+');
 fprintf(out_id,'%s\n','EventId,RankOrder,Class');
 out = [test_id, rank, pred];
 %dlmwrite (save_name, out, '-append','delimiter',',');
-fprintf(out_id,'$d,%d,%d\n',out');
+fprintf(out_id,'%d,%d,%d\n',out');
 fclose(out_id);
 
 
