@@ -5,32 +5,35 @@ addpath('functions\utils');
 addpath('functions\nn_functions');
 
 % Load all data in the form of .mat files.
-
 load('data\train\train.mat');
 load('data\train\cv.mat');
 load('data\test\test.mat');
 
 % Replace -999.0 with 0.
-
 X_train(X_train == -999.0) = 0;
 X_cv(X_cv == -999.0) = 0;
 X_test(X_test == -999.0) = 0;
 
+% Normalize the data.
+% X_train = normalize_range(X_train, 0, 1);
+% X_cv = normalize_range(X_cv, 0, 1);
+% X_test = normalize_range(X_test, 0, 1);
+
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2), 50, 50, 2];
+network = [size(X_train,2); 50; 50; 2];
 iter = 1500;
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.2;
 
 num_layers = size(network,1);
-lamba = ones(num_layers-1,1).*lm;
+lambda = ones(num_layers-1,1).*lm;
 
 % Setting initialize network parameters i.e. thetas or weights.
 initial_nn_params = [];
 for i = 1:num_layers-1
-    parm = randInitializeWeights(network(i),network(i+1));
+    parm = rand_initialize_weights(network(i),network(i+1));
     initial_nn_params = [ initial_nn_params; parm(:)];
 end
 

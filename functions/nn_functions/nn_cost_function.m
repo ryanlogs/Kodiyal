@@ -3,7 +3,7 @@ function [J grad] = nn_cost_function(nn_params, ...
                                    X, y, digit, lambda)
 
 	
-	addpath('function\nn_functions');
+	addpath('functions\nn_functions');
 	m = size(X,1);	
 	
 	num_layers = length(network);
@@ -71,7 +71,7 @@ function [J grad] = nn_cost_function(nn_params, ...
 				delta{i} = (del{i+1})' * A{i};  
 			else
 				del{i} = del{i+1} * Theta{i};
-				del{i} = del{i}(:,2:end) .* sigmoidGradient(Z{i});
+				del{i} = del{i}(:,2:end) .* sigmoid_gradient(Z{i});
 				delta{i} = (del{i+1})' * A{i};  	
 			end
 		end

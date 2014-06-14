@@ -19,13 +19,13 @@ function [] = generate(path1, path2)
     
     % Saving training data.
     fprintf('Saving training and CV data.......\n');
-    X_train = train(1:(end-1),:);
-    Y_train = train(end,:);
+    X_train = train(:,1:(end-1));
+    Y_train = train(:,end);
     save('data\train\train.mat', 'X_train', 'Y_train');
     
     % Saving CV data.
-    X_cv = cv(1:(end-1),:);
-    Y_cv = cv(end,:);
+    X_cv = cv(:, 1:(end-1));
+    Y_cv = cv(:, end);
     save('data\train\cv.mat', 'X_cv', 'Y_cv');
    
     % Saving test data.
