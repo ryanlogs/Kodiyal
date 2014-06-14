@@ -19,12 +19,12 @@ function [] = generate(path1, path2)
     
     % Saving training data.
     fprintf('Saving training and CV data.......\n');
-    X_train = train(:,2:(end-1));
+    X_train = train(:,2:(end-2));
     Y_train = train(:,end);
     save('data\train\train.mat', 'X_train', 'Y_train');
     
     % Saving CV data.
-    X_cv = cv(:, 2:(end-1));
+    X_cv = cv(:, 2:(end-2));
     Y_cv = cv(:, end);
     save('data\train\cv.mat', 'X_cv', 'Y_cv');
    
@@ -33,7 +33,9 @@ function [] = generate(path1, path2)
     master_test = csvread(path2, 1, 0);
 	test_id = master_test(:,1);
 	X_test = master_test(:, 2:end);
+	fprintf('Saving test data...\n');
     save('data\test\test.mat', 'X_test', 'test_id');
+	fprintf('Maka success!!! \n');
     
 end
 

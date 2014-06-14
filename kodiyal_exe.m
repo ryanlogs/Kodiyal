@@ -22,7 +22,7 @@ X_test = normalize_range(X_test, 0, 1);
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
 network = [size(X_train,2); 50; 50; 2];
-iter = 1500;
+iter = 25;
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.2;
