@@ -19,22 +19,22 @@ function rank = get_rank(Theta, X)
 	% Get confidence values
 	for i = 1:size(X,1)
 		if(H(i,2) > H(i,1))
-			p = H(i,2);
+			p(i) = H(i,2);
 		elseif(H(i,2) < H(i,1))
-			p = -1 * H(i,1);
+			p(i) = -1 * H(i,1);
 		else 
-			p = 0;	
+			p(i) = 0;	
 		end	
 	end
 	
 	% adding numbers to sort by index, to retrieve original ordering
-	p = [ (1:m), p]; 
+	p = [ (1:m)', p]; 
 	
 	%sort based on confidence
 	p = sortrows(p,2);
 	
 	% adding rank
-	p = [ p, (1:m)]; 	
+	p = [ p, (1:m);]; 	
 	
 	%resort based on original order
 	p = sortrows(p,1);	
