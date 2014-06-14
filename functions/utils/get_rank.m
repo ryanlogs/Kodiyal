@@ -28,13 +28,13 @@ function rank = get_rank(Theta, X)
 	end
 	
 	% adding numbers to sort by index, to retrieve original ordering
-	p = [ (1:m)', p]; 
+	p = [ (1:m), p]; 
 	
 	%sort based on confidence
 	p = sortrows(p,2);
 	
 	% adding rank
-	p = [ p, (1:m)']; 	
+	p = [ p, (1:m)]; 	
 	
 	%resort based on original order
 	p = sortrows(p,1);	
