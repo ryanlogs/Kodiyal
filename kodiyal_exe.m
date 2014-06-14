@@ -41,7 +41,7 @@ options = optimset('MaxIter', iter);
 
 % Training NN.
 fprintf('Training the Network...\n');
-cost_function = @(p) nn_cost_function(p, network, X_train, Y_train, 0, lambda);
+cost_function = @(p) nn_cost_function(p, network, X_train, Y_train, lambda);
 [nn_params, cost] = fmincg(cost_function, initial_nn_params, options);
 
 %unrolling theta	

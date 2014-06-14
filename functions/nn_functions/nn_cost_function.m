@@ -1,6 +1,6 @@
 function [J grad] = nn_cost_function(nn_params, ...
                                    network, ...
-                                   X, y, digit, lambda)
+                                   X, y, lambda)
 
 	
 	addpath('functions\nn_functions');
