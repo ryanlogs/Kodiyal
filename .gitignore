@@ -217,3 +217,5 @@ data/HiggsBosonCompetition_AMSMetric_rev1.py
 data/random_submission.csv
 data/test/test.csv
 data/train/training.csv
+*.mat
+*.csv
