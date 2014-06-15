@@ -23,11 +23,16 @@ X_test(X_test == -999.0) = 0;
 % X_cv = [X_cv, X_cv.^2];
 % X_test = [X_test, X_test.^2];
 
+% Saving square features
+X_train_sq = X_train.^2;
+X_cv_sq = X_cv.^2;
+X_test_sq = X_test.^2;
+
 % Adding combinational features.
 fprintf('Adding combinational features...\n');
-X_train = add_features(X_train);
-X_cv = add_features(X_cv);
-X_test = add_features(X_test);
+X_train =  [ add_features(X_train), X_train_sq ];
+X_cv = [ add_features(X_cv), X_cv_sq ];
+X_test = [ add_features(X_test), X_test_sq ] ;
 
 % Applying pca algorithm.
 fprintf('Running pca algorithm...\n');
