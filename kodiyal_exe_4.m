@@ -25,7 +25,7 @@ network = [size(X_train,2); 50; 50; 2];
 iter = 100;
 
 % Define the value of the bias factor lambda 'lm'
-lm = 0.01;
+lm = 10;
 
 num_layers = size(network,1);
 lambda = ones(num_layers-1,1).*lm;
