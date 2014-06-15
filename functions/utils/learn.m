@@ -20,7 +20,7 @@ function [Theta] = learn(	network, ...
 	%costFunction = @(p) nn_adv_cost_function(p, network, X,y, lambda);
 
 	for iter = 0:batch:size(X,1)-batch
-
+		fprintf('Currently running %6d to %6d\n',iter+1,iter+batch);
 		costFunction = @(p) nn_adv_cost_function(p, network, X(iter+1:iter+batch,:),y(iter+1:iter+batch,:), lambda);
 		[nn_params, cost] = fmincg(costFunction, nn_params, options);	
 	end	
