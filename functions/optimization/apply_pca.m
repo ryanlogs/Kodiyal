@@ -6,6 +6,9 @@ function [Z, U] = apply_pca(X,flag,features)
 
 	%first normalize
 	[X_norm, mean, sigma] = feature_normalize(X);
+	 
+	X_norm(isinf(X_norm)) = 0;
+	X_norm(isnan(X_norm)) = 0; 
 	
 	%apply PCA
 	[Z, U] = pca(X_norm, flag, features);
