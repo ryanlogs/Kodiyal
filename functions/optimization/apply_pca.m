@@ -1,4 +1,8 @@
-function [Z, U] = apply_pca(Xn,flag,features)
+% Applies PCA  on input features
+% use flag=0 if you want to find optimal features
+% use flag=1 and features to any number u want the result to reduce to
+
+function [Z, U] = apply_pca(X,flag,features)
 
 	%first normalize
 	[X_norm, mean, sigma] = feature_normalize(X);
