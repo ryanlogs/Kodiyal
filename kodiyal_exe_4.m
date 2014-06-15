@@ -11,21 +11,21 @@ addpath('functions\optimization');
 fprintf('Loading data from .mat files...\n');
 load('data\train\train_pca.mat');
 load('data\train\cv_pca.mat');
-load('data\test\test_pca.mat');
+% load('data\test\test_pca.mat');
 
 % Normalize the data.
 fprintf('Normalizing data...\n');
 X_train = normalize_range(X_train, -1, 1);
 X_cv = normalize_range(X_cv, -1, 1);
-X_test = normalize_range(X_test, -1, 1);
+% X_test = normalize_range(X_test, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
 network = [size(X_train,2); 50; 50; 2];
-iter = 500;
+iter = 100;
 
 % Define the value of the bias factor lambda 'lm'
-lm = 1.2;
+lm = 0.01;
 
 num_layers = size(network,1);
 lambda = ones(num_layers-1,1).*lm;
@@ -71,22 +71,22 @@ pred = predict(Theta,X_cv);
 cv_acc = mean(double(pred == Y_cv)) * 100;		
 fprintf('\nCV Accuracy: %f |\tlambda: %f\n', cv_acc, i);
 
-%using Theta to predict Test output and rank
-fprintf('Predicting Test Output...\n');
-pred = predict(Theta,X_test);
-rank = get_rank(Theta,X_test);
-
-%Preparing Output file
-disp('Writing Test Output... \n');
-save_name = sprintf('output\\%s_result%s.csv','Project_kodiyal',datestr(clock,'HH_MM_DDDD_mmmm_YYYY'));
-
-%writing the headers first
-out_id = fopen(save_name,'w+');
-fprintf(out_id,'%s\n','EventId,RankOrder,Class');
-out = [test_id, rank, pred];
-%dlmwrite (save_name, out, '-append','delimiter',',');
-fprintf(out_id,'%d,%d,%d\n',out');
-fclose(out_id);
+% using Theta to predict Test output and rank
+% fprintf('Predicting Test Output...\n');
+% pred = predict(Theta,X_test);
+% rank = get_rank(Theta,X_test);
+% 
+% Preparing Output file
+% disp('Writing Test Output... \n');
+% save_name = sprintf('output\\%s_result%s.csv','Project_kodiyal',datestr(clock,'HH_MM_DDDD_mmmm_YYYY'));
+% 
+% writing the headers first
+% out_id = fopen(save_name,'w+');
+% fprintf(out_id,'%s\n','EventId,RankOrder,Class');
+% out = [test_id, rank, pred];
+% dlmwrite (save_name, out, '-append','delimiter',',');
+% fprintf(out_id,'%d,%d,%d\n',out');
+% fclose(out_id);
 
 
 
