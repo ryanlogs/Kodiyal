@@ -1,6 +1,6 @@
 % Assume that generate data function has been run.
 % Major change in this variant is the addition of combinational features.
-% No square or cubic features
+% No square or cubic features.
 
 %add paths
 addpath('functions\utils');
@@ -21,8 +21,8 @@ X_test = normalize_range(X_test, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2); 50; 2];
-iter = 300;
+network = [size(X_train,2); 50; 50; 2];
+iter = 500;
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.2;
