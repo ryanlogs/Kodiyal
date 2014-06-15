@@ -13,7 +13,7 @@ function [X_secondary] = add_features(X_primary)
 	for i = 1:size(combos,1)
 		i = combos(i,1);
 		j = combos(i,2);
-		%X_secondary = [ X_secondary, X_primary(:,i).*X_primary(:,j), X_primary(:,i)./X_primary(:,j) ];
+		% X_secondary = [ X_secondary, X_primary(:,i).*X_primary(:,j), X_primary(:,i)./X_primary(:,j) ];
 		X_secondary = [ X_secondary, X_primary(:,i).*X_primary(:,j) ];
 	end
 end

@@ -1,5 +1,8 @@
 % Assume that generate data function has been run.
-% Major change in this variant is the addition of combinational features.
+% Major change in this variant is the addition of combinational (multiply and divide) and square features.
+% Start of the code is used to run the pca. Then we save the matlab variables and use exec v4 to run.
+% This is done because running the pca algorithm on the test data is very computationally expensive.
+
 
 %add paths
 addpath('functions\utils');
