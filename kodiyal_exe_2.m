@@ -1,4 +1,5 @@
 % Assume that generate data function has been run.
+% Major change in this variant is the addition of squared and cubic features.
 
 %add paths
 addpath('functions\utils');
@@ -14,6 +15,11 @@ X_train(X_train == -999.0) = 0;
 X_cv(X_cv == -999.0) = 0;
 X_test(X_test == -999.0) = 0;
 
+% Adding square and cubic features.
+X_train = [X_train, X_train.^2, X_train.^3];
+X_cv = [X_cv, X_cv.^2, X_cv.^3];
+X_test = [X_test, X_test.^2, X_test.^3];
+
 % Normalize the data.
 X_train = normalize_range(X_train, 0, 1);
 X_cv = normalize_range(X_cv, 0, 1);
@@ -21,8 +27,8 @@ X_test = normalize_range(X_test, 0, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2); 50; 50; 2];
-iter = 1500;
+network = [size(X_train,2); 300; 300; 2];
+iter = 1000;
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.2;
@@ -83,11 +89,13 @@ save_name = sprintf('output\\%s_result%s.csv','DigitRec',datestr(clock,'HH_MM_DD
 %writing the headers first
 out_id = fopen(save_name,'w+');
 fprintf(out_id,'%s\n','EventId,RankOrder,Class');
+out = [test_id, rank, pred];
+%dlmwrite (save_name, out, '-append','delimiter',',');
+fprintf(out_id,'%d,%d,%d\n',out');
 fclose(out_id);
 
-out = (1:size(X_test,1))';
-out = [out, rank, pred];
-dlmwrite (save_name, out, '-append','delimiter',',');
+
+
 
 fprintf('Done!!!\n');
 
