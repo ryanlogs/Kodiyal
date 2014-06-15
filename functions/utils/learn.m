@@ -10,20 +10,20 @@ function [Theta] = learn(	network, ...
 	
 	nn_params = [];
 	for i = 1: num_layers-1
-		parm = randInitializeWeights(network(i),network(i+1));
+		parm = rand_initialize_weights(network(i),network(i+1));
 		nn_params = [ nn_params ; parm(:) ];
 	end	
 	
-	fprintf('\n\nTraining Neural Network for digit %d\n',digit);
+	% fprintf('\n\nTraining Neural Network for digit %d\n');
 	options = optimset('MaxIter', batch_iter);
 	
 	%costFunction = @(p) nn_adv_cost_function(p, network, X,y, lambda);
 
-	for iter = 0:batch:size(X,1)-batch;
+	for iter = 0:batch:size(X,1)-batch
 
-		costFunction = @(p) nnCostFunction(p, network, X(iter+1:iter+batch,:),y(iter+1:iter+batch,:), lambda);
+		costFunction = @(p) nn_adv_cost_function(p, network, X(iter+1:iter+batch,:),y(iter+1:iter+batch,:), lambda);
 		[nn_params, cost] = fmincg(costFunction, nn_params, options);	
-	%end	
+	end	
 	
 	Theta = cell(num_layers-1,1);
 	read = 0;
