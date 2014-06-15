@@ -1,5 +1,6 @@
 % Assume that generate data function has been run.
 % Major change in this variant is the addition of combinational features.
+% No square or cubic features
 
 %add paths
 addpath('functions\utils');
@@ -8,43 +9,20 @@ addpath('functions\optimization');
 
 % Load all data in the form of .mat files.
 fprintf('Loading data from .mat files...\n');
-load('data\train\train.mat');
-load('data\train\cv.mat');
-load('data\test\test.mat');
-
-% Replace -999.0 with 0.
-fprintf('Replacing -999.0 with 0...\n');
-X_train(X_train == -999.0) = 0;
-X_cv(X_cv == -999.0) = 0;
-X_test(X_test == -999.0) = 0;
-
-% Adding square and cubic features.
-% X_train = [X_train, X_train.^2];
-% X_cv = [X_cv, X_cv.^2];
-% X_test = [X_test, X_test.^2];
-
-% Adding combinational features.
-fprintf('Adding combinational features...\n');
-X_train = add_features(X_train);
-X_cv = add_features(X_cv);
-X_test = add_features(X_test);
-
-% Applying pca algorithm.
-fprintf('Replacing -999.0 with 0...\n');
-[X_train, dummy] = apply_pca(X_train, 0, 1);
-k = size(X_train,2); % Number of features that X_train has been reduced to.
-[X_cv, dummy] = apply_pca(X_cv, 1, k);
-[X_test, dummy] = apply_pca(X_test, 1, k);
+load('data\train\train_pca.mat');
+load('data\train\cv_pca.mat');
+load('data\test\test_pca.mat');
 
 % Normalize the data.
+fprintf('Normalizing data...\n');
 X_train = normalize_range(X_train, -1, 1);
 X_cv = normalize_range(X_cv, -1, 1);
 X_test = normalize_range(X_test, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2); 100; 2];
-iter = 10;
+network = [size(X_train,2); 50; 2];
+iter = 300;
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.2;
