@@ -22,21 +22,18 @@ X_test = normalize_range(X_test, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2); 50; 2];
-iter = 300;
+network = [size(X_train,2); 200; 200; 2];
 
 % Define the value of the bias factor lambda 'lm'
-lm = 1.2;
+lm = 0.8;
 
 num_layers = size(network,1);
 lambda = ones(num_layers-1,1).*lm;
 
-options = optimset('MaxIter', iter);
-
 % Training NN.
 fprintf('Training the Network...\n');
 Theta = learn(	network, ...
-				X_train, Y_train, lambda, 1000, 50)
+				X_train, Y_train, lambda, 500, 300)
 
 
 fprintf('Training Completed.\n');

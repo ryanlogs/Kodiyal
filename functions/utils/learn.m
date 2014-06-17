@@ -4,7 +4,7 @@ function [Theta] = learn(	network, ...
 							
 %function takes all the parameters and trains the network							
 
-	addpath('function\nn_functions');
+	addpath('functions\nn_functions');
 	
 	num_layers = size(network,1);
 	
