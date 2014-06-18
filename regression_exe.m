@@ -3,21 +3,22 @@ addpath('functions\nn_functions');
 addpath('functions\reg_functions');
 
 
-X = 1:100;
-Y = 4.* X.^2;
-m = size(X,1);
-n = size(X,2);
+x = (1:100)';
+Y = sin(x);
+m = size(x,1);
+X = [ones(m,1), x, x.^2];
+n = size(X,2)-1;
+lambda = 1.2;
 
 initial_theta = rand_initialize_weights(n,1)';
-size(initial_theta)
 options = optimset('MaxIter', 100);
-cost_function = @(p) reg_cost_function(p, [ones(m,1), X], Y, lambda);
+cost_function = @(p) reg_cost_function(p, X, Y, lambda);
 [theta, cost] = fmincg(cost_function, initial_theta, options);
 
-pred = [ones(m,1), X] * theta;
+pred = X * theta;
 
 figure();
 hold on;
-scatter(X,Y);
-plot(X,pred,'red');
+scatter(x,Y);
+plot(x,pred,'red');
 hold off;
