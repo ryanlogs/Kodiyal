@@ -49,6 +49,8 @@ X_train = normalize_std(X_train);
 X_cv = normalize_std(X_cv);
 X_test = normalize_std(X_test);
 
+X_train = [X_train, X_train.^2];
+
 % Initial setting of theta (weights).
 m = size(X_train,1);
 n = size(X_train,2);
