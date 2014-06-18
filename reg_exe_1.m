@@ -13,6 +13,29 @@ load('data\train\train.mat');
 load('data\train\cv.mat');
 load('data\test\test.mat');
 
+% Replace -999.0 with 0.
+fprintf('Replacing -999.0 with 0...\n');
+X_train(X_train == -999.0) = 0;
+X_cv(X_cv == -999.0) = 0;
+X_test(X_test == -999.0) = 0;
+
+% Adding square and cubic features.
+% X_train = [X_train, X_train.^2];
+% X_cv = [X_cv, X_cv.^2];
+% X_test = [X_test, X_test.^2];
+
+% Saving square features
+X_train_sq = X_train.^2;
+X_cv_sq = X_cv.^2;
+X_test_sq = X_test.^2;
+
+% Adding combinational features.
+fprintf('Adding combinational features...\n');
+X_train =  [ add_features(X_train), X_train_sq ];
+X_cv = [ add_features(X_cv), X_cv_sq ];
+X_test = [ add_features(X_test), X_test_sq ] ;
+
+
 % Normalize the data.
 fprintf('Normalizing data...\n');
 X_train = normalize_std(X_train);
