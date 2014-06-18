@@ -47,17 +47,17 @@ X_test = normalize_range(X_test, -1, 1);
 
 
 % convert weights to classes
-W_train = weight_to_class(weight_train,0.02,1);
-W_cv = weight_to_class(weight_cv,0.02,1);
+W_train = weight_to_class(weight_train,0.02,0.04);
+W_cv = weight_to_class(weight_cv,0.02,0.04);
 
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2); 50; max(W_train)+1];
-iter = 300;
+network = [size(X_train,2); 300; max(W_train)+1];
+iter = 1000;
 
 % Define the value of the bias factor lambda 'lm'
-lm = 1.2;
+lm = 0.8;
 
 num_layers = size(network,1);
 lambda = ones(num_layers-1,1).*lm;
@@ -113,13 +113,13 @@ fprintf('\nCV Accuracy: %f |\tlambda: %f\n', cv_acc, i);
 % disp('Writing Test Output... \n');
 % save_name = sprintf('output\\%s_result%s.csv','Project_kodiyal',datestr(clock,'HH_MM_DDDD_mmmm_YYYY'));
 
-%writing the headers first
-out_id = fopen(save_name,'w+');
-fprintf(out_id,'%s\n','EventId,RankOrder,Class');
-out = [test_id, rank, pred];
-%dlmwrite (save_name, out, '-append','delimiter',',');
-fprintf(out_id,'%d,%d,%d\n',out');
-fclose(out_id);
+% %writing the headers first
+% out_id = fopen(save_name,'w+');
+% fprintf(out_id,'%s\n','EventId,RankOrder,Class');
+% out = [test_id, rank, pred];
+% %dlmwrite (save_name, out, '-append','delimiter',',');
+% fprintf(out_id,'%d,%d,%d\n',out');
+% fclose(out_id);
 
 
 

@@ -21,12 +21,14 @@ function [] = generate(path1, path2)
     fprintf('Saving training and CV data.......\n');
     X_train = train(:,2:(end-2));
     Y_train = train(:,end);
-    save('data\train\train.mat', 'X_train', 'Y_train');
+    weight_train = train(:,end-1);
+    save('data\train\train.mat', 'X_train', 'Y_train', 'weight_train');
     
     % Saving CV data.
     X_cv = cv(:, 2:(end-2));
     Y_cv = cv(:, end);
-    save('data\train\cv.mat', 'X_cv', 'Y_cv');
+    weight_cv = cv(:,end-1);
+    save('data\train\cv.mat', 'X_cv', 'Y_cv', 'weight_cv');
    
     % Saving test data.
     fprintf('Reading %s \n', path2);
