@@ -35,6 +35,12 @@ X_train =  [ add_features(X_train), X_train_sq ];
 X_cv = [ add_features(X_cv), X_cv_sq ];
 X_test = [ add_features(X_test), X_test_sq ] ;
 
+% Applying pca algorithm.
+fprintf('Running pca algorithm...\n');
+[X_train, dummy] = apply_pca(X_train, 0, 1);
+k = size(X_train,2); % Number of features that X_train has been reduced to.
+[X_cv, dummy] = apply_pca(X_cv, 1, k);
+[X_test, dummy] = apply_pca(X_test, 1, k);
 
 % Normalize the data.
 fprintf('Normalizing data...\n');
