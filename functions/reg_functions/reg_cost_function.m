@@ -4,85 +4,15 @@ function [J grad] = nn_adv_cost_function(nn_params, X, y, lambda)
 	addpath('functions\nn_functions');
 	addpath('functions\utils');
 	m = size(X,1);	
+	n = size(X,2);
 	
-	num_lables = network(num_layers);
-	Theta = cell(num_layers-1,1);
-	read = 0;
-
-	for i = 1:num_layers - 1
-		Theta{i} = reshape(nn_params(read + 1: read + network(i+1) * (network(i) + 1)), ...
-						network(i+1), network(i)+1);
-						
-		read = 	read + network(i+1) * (network(i) + 1);
-	end		
+	% compute cost
+	H = X * nn_params;
+	J = sum((H-y).^2) /(2*m) - sum(nn_params.^2) * lambda;
 	
-% You need to return the following variables correctly 
-	J = 0;
-		
-% computing cost
-	A = cell(num_layers,1);
-	Z = cell(num_layers,1);
-	for i=1:num_layers
-		if(i==1)
-			A{i} = [ones(m,1) , X];
-		else
-			Z{i} = A{i-1} * (Theta{i-1})';
-			A{i} = hyperbolic(Z{i});
-			if(i~=num_layers)
-				A{i} = [ ones(m,1) , A{i} ];
-			end		
-		end	
-	end
+	% gradient
+	temp = sum(((H-y) * ones(1,n)) .* X) / m;
+	temp(:,2:end) = temp(:,2:end) + nn_params' .* (lambda/m)
 	
-	%setting output vector	
-	%Y = [-1.*y , y];
-	Y = -1.*ones(m, num_lables);
-	for i = 1:m,
-		Y(i,y(i)+1) = 1;
-	end;
-
-	J = sum(sum(error_function(A{num_layers},Y))) / (m);
-
-	reg = 0;
-	for i = 1:num_layers-1
-		t = Theta{i}(:,2:end);
-		reg = reg + sum(t(:).^2) * lambda(i);
-	end
-	
-	reg = reg / (2*m);
-	
-	J = J + reg;
-
-	%computing gradient
-	
-	delta = cell(num_layers,1);
-	del = cell(num_layers,1);
-	
-	for i = num_layers:-1:1
-		if(i==num_layers)
-			del{i} = (A{i} - Y).*hyperbolic_gradient(Z{i});
-		else 
-			if(i == 1)
-				delta{i} = (del{i+1})' * A{i};  
-			else
-				del{i} = del{i+1} * Theta{i};
-				del{i} = del{i}(:,2:end) .* hyperbolic_gradient(Z{i});
-				delta{i} = (del{i+1})' * A{i};  	
-			end
-		end
-	end
-	
-	Theta_grad = cell(num_layers-1,1);
-	for i = 1:num_layers - 1
-		Theta_grad{i} = delta{i} ./ m;
-	end
-
-	grad = [];
-	for i = 1:num_layers - 1
-		Theta_grad{i}(:,2:end) = Theta_grad{i}(:,2:end)  + Theta{i}(:,2:end) .* (lambda(i)/m);
-		
-		% Unroll gradients	
-		grad = [grad ; Theta_grad{i}(:)];
-	end
-	
+	grad = temp';
 end
