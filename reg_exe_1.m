@@ -5,6 +5,7 @@
 %add paths
 addpath('functions\utils');
 addpath('functions\nn_functions');
+addpath('functions\reg_functions');
 addpath('functions\optimization');
 
 % Load all data in the form of .mat files.
