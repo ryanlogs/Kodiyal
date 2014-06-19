@@ -1,6 +1,6 @@
-function [J grad] = nn_reg_cost_function(nn_params, ...
+function [J grad] = nn_adv_cost_function(nn_params, ...
                                    network, ...
-                                   X, y, lambda)
+                                   X, Y, lambda)
 
 	
 	addpath('functions\nn_functions');
@@ -25,10 +25,7 @@ function [J grad] = nn_reg_cost_function(nn_params, ...
 % computing cost
 	A = cell(num_layers,1);
 	Z = cell(num_layers,1);
-	
-	% Activation of up to ultimate layer.
-
-	for i=1:num_layers-1
+	for i=1:num_layers
 		if(i==1)
 			A{i} = [ones(m,1) , X];
 		else
@@ -40,15 +37,11 @@ function [J grad] = nn_reg_cost_function(nn_params, ...
 		end	
 	end
 	
-	% Activation of final layer.
-	A{num_layers} =  A{num_layers-1}*(Theta{num_layers-1})';
-		
 	%setting output vector	
 	%Y = [-1.*y , y];
-	Y = y;
 
-	J = sum((A{num_layers} - Y).^2)./m;
-	% J = sum(sum(error_function(A{num_layers},Y))) / (m);
+
+	J = sum((A{i}- Y).^2 ./ 2) / (m);
 
 	reg = 0;
 	for i = 1:num_layers-1
@@ -67,8 +60,7 @@ function [J grad] = nn_reg_cost_function(nn_params, ...
 	
 	for i = num_layers:-1:1
 		if(i==num_layers)
-			del{i} = (A{i} - Y);			
-			% del{i} = (A{i} - Y).*hyperbolic_gradient(Z{i});
+			del{i} = (A{i} - Y).*hyperbolic_gradient(Z{i});
 		else 
 			if(i == 1)
 				delta{i} = (del{i+1})' * A{i};  
@@ -80,7 +72,6 @@ function [J grad] = nn_reg_cost_function(nn_params, ...
 		end
 	end
 	
-
 	Theta_grad = cell(num_layers-1,1);
 	for i = 1:num_layers - 1
 		Theta_grad{i} = delta{i} ./ m;

@@ -13,11 +13,13 @@ addpath('functions\reg_functions');
 % load('data\train\cv_pca.mat');
 % load('data\test\test_pca.mat');
 
-X_train = 100.*rand(100,1);
+X_train = sort(100.*rand(100,1));
 Y_train = 17.5.*(X_train.^2) - 9.*X_train + 36.827;
+%X_train = [X_train, X_train.^2];
 
-X_cv = 100.*rand(50,1);
+X_cv = sort(100.*rand(50,1));
 Y_cv = 17.5.*(X_cv.^2) - 9.*X_cv + 36.827;
+%X_cv = [X_cv, X_cv.^2];
 
 % Normalize the data.
 fprintf('Normalizing data...\n');
@@ -31,7 +33,7 @@ network = [size(X_train,2); 100; 100; 1];
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.2;
-iter = 500;
+iter = 100;
 
 num_layers = size(network,1);
 lambda = ones(num_layers-1,1).*lm;
@@ -47,7 +49,7 @@ options = optimset('MaxIter', iter);
 
 % Training NN.
 fprintf('Training the Network...\n');
-cost_function = @(p) nn_reg_cost_function(p, network, X_train, Y_train, lambda);
+cost_function = @(p) nn_reg_cost_function(p, network, X_train, normalize_range(Y_train,-1,1), lambda);
 [nn_params, cost] = fmincg(cost_function, initial_nn_params, options);
 
 %unrolling theta	
@@ -68,17 +70,21 @@ fprintf('Network ready to predict...\n');
 
 %using Theta to predict Training output
 pred = predict_reg(Theta,X_train);
+pred = normalize_range(pred,min(Y_train),max(Y_train));
+
 train_acc = coeff_of_deter(pred, Y_train);		
 fprintf('\nTraining Accuracy: %f |\tlambda: %f\n', train_acc, i);	
+
 figure();
 hold on;
-scatter(X_train, Y_train, 'blue');
-plot(X_train, pred, 'red');
+scatter(X_train(:,1), Y_train, 'blue');
+plot(X_train(:,1), pred, 'red');
 hold off;
 
 
 %using Theta to predict Cross Validation output
 pred = predict_reg(Theta,X_cv);
+pred = normalize_range(pred,min(Y_cv),max(Y_cv));
 cv_acc = coeff_of_deter(pred, Y_cv);		
 fprintf('\nCV Accuracy: %f |\tlambda: %f\n', cv_acc, i);
 
