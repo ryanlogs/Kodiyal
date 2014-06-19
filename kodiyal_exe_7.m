@@ -30,7 +30,7 @@ fprintf('Initializing the Network...\n');
 network = [size(X_train,2); 100; 100; 1];
 
 % Define the value of the bias factor lambda 'lm'
-lm = 1.2;
+lm = 0.05;
 iter = 500;
 
 num_layers = size(network,1);
