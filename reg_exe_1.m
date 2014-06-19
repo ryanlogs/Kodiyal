@@ -49,20 +49,21 @@ X_train = normalize_std(X_train);
 X_cv = normalize_std(X_cv);
 X_test = normalize_std(X_test);
 
-X_train = [X_train, X_train.^2];
+X_train = [X_train, X_train.^2, X_train.^3];
 
 % Initial setting of theta (weights).
 m = size(X_train,1);
 n = size(X_train,2);
-lambda = 1.2;
+lambda = 0.2;
 
 initial_theta = rand_initialize_weights(n,1)';
 
 % Cost function.
-options = optimset('MaxIter', 100);
+options = optimset('MaxIter', 5000); %enter iterations here
 cost_function = @(p) reg_cost_function(p , [ones(m,1), X_train], W_train, lambda);
 [theta, cost] = fmincg(cost_function, initial_theta, options);
 
 pred = [ones(m,1), X_train] * theta;
 
+r = coeff_of_deter(pred,W_train)
 
