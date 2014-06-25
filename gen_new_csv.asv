@@ -24,7 +24,6 @@ X_train =  add_features(X_train);
 %  Replace values with -999
 fprintf('Replacing values with -999.0 ...\n');
 X_train(X_train < -1000000) = -999;
-X_train(X_train > 1000000) = -999;
 
 % Applying pca algorithm.
 fprintf('Running pca algorithm...\n');
@@ -32,4 +31,4 @@ fprintf('Running pca algorithm...\n');
 k = size(X_train,2); % Number of features that X_train has been reduced to.
 
 % Writing new csv
-X_train_new = [Event_id, X_train, Weigts, Output];
+X_train_new = [Event_idm, X_train, Weigts, Output];
