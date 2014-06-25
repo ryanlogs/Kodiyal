@@ -27,11 +27,11 @@ X_test = normalize_range(X_test, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2); 100; 100; 1];
+network = [size(X_train,2); 50; 50; 50; 1];
 
 % Define the value of the bias factor lambda 'lm'
 lm = 1.1;
-iter = 100;
+iter = 2400;
 
 num_layers = size(network,1);
 lambda = ones(num_layers-1,1).*lm;
@@ -86,7 +86,7 @@ pred = predict(Theta,X_test);
 W_test = normalize_range(pred,min(W_train),max(W_train));
 
 fprintf('Save W_test Output...\n');
-save('data\test\test_v2.mat',X_test,W_test);
+save('data\test\test_v2.mat','X_test','W_test');
 % % %Preparing Output file
 % disp('Writing Test Output... \n');
 % save_name = sprintf('output\\%s_result%s.csv','Project_kodiyal',datestr(clock,'HH_MM_DDDD_mmmm_YYYY'));

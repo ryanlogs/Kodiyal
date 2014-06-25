@@ -15,23 +15,23 @@ X_train(X_train == -999.0) = 0;
 X_cv(X_cv == -999.0) = 0;
 X_test(X_test == -999.0) = 0;
 
-% Adding square and cubic features.
-X_train = [X_train, X_train.^2, X_train.^3];
-X_cv = [X_cv, X_cv.^2, X_cv.^3];
-X_test = [X_test, X_test.^2, X_test.^3];
+% % Adding square and cubic features.
+% X_train = [X_train, X_train.^2, X_train.^3];
+% X_cv = [X_cv, X_cv.^2, X_cv.^3];
+% X_test = [X_test, X_test.^2, X_test.^3];
 
 % Normalize the data.
-X_train = normalize_range(X_train, 0, 1);
-X_cv = normalize_range(X_cv, 0, 1);
-X_test = normalize_range(X_test, 0, 1);
+X_train = normalize_range(X_train, -1, 1);
+X_cv = normalize_range(X_cv, -1, 1);
+X_test = normalize_range(X_test, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2); 300; 300; 2];
-iter = 1000;
+network = [size(X_train,2); 50; 50; 50; 2];
+iter = 5500;
 
 % Define the value of the bias factor lambda 'lm'
-lm = 1.2;
+lm = 0.9;
 
 num_layers = size(network,1);
 lambda = ones(num_layers-1,1).*lm;
