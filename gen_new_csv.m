@@ -38,7 +38,7 @@ fprintf(out_id,'%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%
 fclose(out_id);
 
 clear all;
-k=24
+k=24;
 
 path = 'data\test\test.csv';
 M = csvread(path,1,0);
@@ -48,7 +48,7 @@ X_test = M(:,2:end);
 
 % Replace -999.0 with 1000000000.
 fprintf('Replacing -999.0 with 0...\n');
-X_test(X_train == -999.0) = 1000000000;
+X_test(X_test == -999.0) = 1000000000;
 
 % Adding combinational features.
 fprintf('Adding combinational features...\n');
