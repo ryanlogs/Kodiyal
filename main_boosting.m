@@ -20,7 +20,7 @@ X_train = normalize_range(X_train, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2);  100; 2];
+network = [size(X_train,2);  100; 100; 2];
 num_layers = size(network,1);
 
 % Define the value of the bias factor lambda 'lm'
