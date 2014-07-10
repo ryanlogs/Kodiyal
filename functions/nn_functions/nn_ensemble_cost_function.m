@@ -15,8 +15,8 @@ function [J grad] = nn_ensemble_cost_function(nn_params, ...
 	X = X(weights(ceil(1:0.8*m),1),:);
 	y = y(weights(ceil(1:0.8*m),1),:);
 	
-	X = X(weights >= 1/m,:);
-	y = y(weights >= 1/m,:);
+	% X = X(weights >= 1/m,:);
+	% y = y(weights >= 1/m,:);
 	
 	m = size(X,1);
 	

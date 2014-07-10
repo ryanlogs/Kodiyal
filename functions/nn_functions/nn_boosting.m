@@ -21,24 +21,40 @@
 			parm = rand_initialize_weights(network(j),network(j+1));
 			initial_nn_params = [ initial_nn_params; parm(:)];
 		end
+		error = 1;
+		parameters = initial_nn_params;
+		prev_cost = 1000;
+		while (error >= 0.47)
 		
-		% training the ith expert
-		cost_function = @(p) nn_ensemble_cost_function(p, network, X_train, Y_train, lambda, weights);
-		[nn_params, cost] = fmincg(cost_function, initial_nn_params, options);
+			% training the ith expert
+			cost_function = @(p) nn_ensemble_cost_function(p, network, X_train, Y_train, lambda, weights);
+			[nn_params, cost] = fmincg(cost_function, parameters, options);
+			
+			% unrolling theta	
+			Theta = cell(num_layers-1,1);
+			read = 0;
+			parameters = [];
+			for j = 1:num_layers - 1
+				Theta{j} = reshape(nn_params(read + 1: read + network(j+1) * (network(j) + 1)), ...
+								network(j+1), network(j)+1);
+				parameters = [parameters; Theta{j}(:)];					
+				read = 	read + network(j+1) * (network(j) + 1);
+			end
+			
+			% calculate error rate 
+			pred = predict(Theta,X_train);
+			error = sum(weights(pred~=Y_train));
+			options = optimset('MaxIter', 50);
+			fprintf('Error = %f\n',error);
+			fprintf('Cost %f\n',cost(end,1));
+			fprintf('Prev %f\n',prev_cost);
+			
+			if(cost(end,1)/prev_cost >= 0.97)
+				break;
+			end	
+			prev_cost = cost(end,1);	
+		end;
 		
-		% unrolling theta	
-		Theta = cell(num_layers-1,1);
-		read = 0;
-		for j = 1:num_layers - 1
-			Theta{j} = reshape(nn_params(read + 1: read + network(j+1) * (network(j) + 1)), ...
-							network(j+1), network(j)+1);
-								
-			read = 	read + network(j+1) * (network(j) + 1);
-		end
-		
-		% calculate error rate 
-		pred = predict(Theta,X_train);
-		error = sum(weights(pred~=Y_train));
 		
 		% update weights
 		weights(pred~=Y_train) = weights(pred~=Y_train) ./ (2*error);
@@ -62,7 +78,6 @@
 		% print results
 		a = mean(double(pred == Y_train)) * 100;
 		fprintf('%10d | %5f | %f %f %f\n', i, accuracy, alpha, error, a);
-		plot(i,accuracy);
 	end
 	
 end
