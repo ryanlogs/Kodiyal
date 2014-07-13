@@ -24,7 +24,7 @@
 		error = 1;
 		parameters = initial_nn_params;
 		prev_cost = 1000;
-		while (error >= 0.47)
+		while (error >= 0.50)
 		
 			% training the ith expert
 			cost_function = @(p) nn_ensemble_cost_function(p, network, X_train, Y_train, lambda, weights);
@@ -49,7 +49,7 @@
 			fprintf('Cost %f\n',cost(end,1));
 			fprintf('Prev %f\n',prev_cost);
 			
-			if(cost(end,1)/prev_cost >= 0.97)
+			if(cost(end,1)/prev_cost >= 0.99)
 				break;
 			end	
 			prev_cost = cost(end,1);	
