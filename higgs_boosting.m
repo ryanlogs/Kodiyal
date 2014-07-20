@@ -32,3 +32,37 @@ lambda = ones(num_layers-1,1).*lm;
 experts = 50;
 
 ensemble = nn_boosting( experts, network, X_train, Y_train, lambda);
+
+fprintf("Trainig done!!!\n");
+% calculate predictions and accuracy
+fprintf('Predicting Training Accuracy...\n');
+hypothesis = predict_ensemble(ensemble,X_train,experts);
+train_acc = mean(double(hypothesis == Y_train)) * 100;
+fprintf('\nTraining Accuracy: %f \n', train_acc);	
+
+% calculate predictions and accuracy
+fprintf('Predicting CV Accuracy...\n');
+hypothesis = predict_ensemble(ensemble,X_cv,experts);
+cv_acc = mean(double(hypothesis == Y_cv)) * 100;
+fprintf('\nCross Validation Accuracy: %f \n', cv_acc
+
+%using Theta to predict Test output and rank
+fprintf('Predicting Test Output...\n');
+pred = predict_ensemble(ensemble,X_test,experts);
+rank = get_rank_ensemble(ensemble,X_test,experts);
+
+%Preparing Output file
+disp('Writing Test Output... \n');
+save_name = sprintf('output\\%s_result%s.csv','Project_kodiyal',datestr(clock,'HH_MM_DDDD_mmmm_YYYY'))
+
+%writing the headers first
+out_id = fopen(save_name,'w+');
+fprintf(out_id,'%s\n','EventId,RankOrder,Class');
+out = [test_id, rank, pred];
+%dlmwrite (save_name, out, '-append','delimiter',',');
+fprintf(out_id,'%d,%d,%d\n',out');
+fclose(out_id);
+
+fprintf('Done!!!\n');
+
+
