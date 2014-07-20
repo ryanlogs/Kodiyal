@@ -21,7 +21,7 @@ X_test = normalize_range(X_test, -1, 1);
 
 % Define the network size and parameters here.
 fprintf('Initializing the Network...\n');
-network = [size(X_train,2);  50; 50; 50; 50; 50; 2];
+network = [size(X_train,2);  100; 100; 2];
 num_layers = size(network,1);
 
 % Define the value of the bias factor lambda 'lm'

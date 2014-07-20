@@ -30,7 +30,7 @@ lm = 1.2;
 lambda = ones(num_layers-1,1).*lm;
 
 % set number of experts
-experts = 50;
+experts = 200;
 
 ensemble = nn_boosting( experts, network, X_train, Y_train, lambda);
 
