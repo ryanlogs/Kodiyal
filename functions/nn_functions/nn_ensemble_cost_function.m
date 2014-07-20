@@ -12,8 +12,8 @@ function [J grad] = nn_ensemble_cost_function(nn_params, ...
 	weights = [(1:m)' weights];
 	weights = sortrows(weights,[-2, 1]);
 	
-	X = X(weights(ceil(1:0.8*m),1),:);
-	y = y(weights(ceil(1:0.8*m),1),:);
+	X = X(weights(ceil(1:0.5*m),1),:);
+	y = y(weights(ceil(1:0.5*m),1),:);
 	
 	% X = X(weights >= 1/m,:);
 	% y = y(weights >= 1/m,:);
