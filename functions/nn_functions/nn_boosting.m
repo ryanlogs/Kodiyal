@@ -10,7 +10,7 @@
 
 	
 	num_layers = size(network,1);
-	options = optimset('MaxIter', 100);
+	options = optimset('MaxIter', 50);
 	
 	fprintf('\nIterations | Accuracy\n');
 	% start training experts
